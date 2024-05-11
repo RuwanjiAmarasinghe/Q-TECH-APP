@@ -62,3 +62,4 @@ $route['delete_answer/(:any)'] = 'answer/delete_answer/$1';
 $route['vote_answer/(:any)/(:any)'] = 'vote/vote_answer/$1/$2';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+

@@ -17,9 +17,11 @@ class User extends CI_Controller
 		date_default_timezone_set('Asia/Colombo');
 		$user_id = $this->session->userdata('user_id');
 		$this->user = $this->User_model->get_user($user_id);
-		$this->data['user_id'] = $user_id;
-		$this->data['username'] = $this->user['username'];
-		$this->data['email'] = $this->user['email'];
+		if ($this->user !== null) {
+			$this->data['user_id'] = $user_id;
+			$this->data['username'] = $this->user['username'];
+			$this->data['email'] = $this->user['email'];
+		}
 
 	}
 
@@ -51,9 +53,9 @@ class User extends CI_Controller
 		}
 	}
 
+	
 	public function login()
 	{
-
 		$this->data['title'] = 'Login';
 
 		// Get user input
@@ -63,19 +65,31 @@ class User extends CI_Controller
 		// Login the user
 		$user = $this->User_model->login($username, $password);
 
-		if ($user) {
 
+		if ($user) {
+			// User login successful
+	
 			// Set the user's session data
 			$this->session->set_userdata('user_id', $user->id);
 			$this->session->set_userdata('username', $user->username);
-			// Redirect to home page
-			redirect('home');
+	
+			// Check if there is a redirect URL in the session data
+			$redirect_url = $this->session->userdata('redirect_url');
+	
+			if ($redirect_url) {
+				// There is a redirect URL, redirect to it
+				redirect($redirect_url);
+			} else {
+				// There is no redirect URL, redirect to home
+				redirect('home');
+			}
 		} else {
 			// User login failed
 			// Load the login view
 			$this->load->view('login', $this->data);
 		}
 	}
+
 
 	public function logout()
 	{

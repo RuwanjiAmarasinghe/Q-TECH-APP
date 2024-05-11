@@ -5,8 +5,8 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>Q&TECH - Qs for Techies</title>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+	<title>Q&TECH</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/minty/bootstrap.min.css" integrity="sha384-H4X+4tKc7b8s4GoMrylmy2ssQYpDHoqzPa9aKXbDwPoPUA3Ra8PA5dGzijN+ePnH" crossorigin="anonymous">
 	<style>
 		.question-list {
 			height: 400px;
@@ -19,53 +19,34 @@
 	<?php $this->load->view('Header'); ?>
 	<div class="container">
 
-		<div class=" mt-3 mb-3">
+		<div class=" mt-3 mb-5">
 			<input type="text" class="form-control" placeholder="Search questions...">
 		</div>
+		
+
+
+		<!-- Welcome Message -->
+        <div class="text-center mb-3"> 
+			<h5>Welcome to</h5><h1>Q&TECH</h1>
+			<div class="row justify-content-center">
+				<div class="col-md-8"> 
+					<p class="text-justify">This is a platform where you can ask technical questions and get answers from the community. Feel free to ask any question or answer the questions asked by others. Let's help each other grow!</p>
+					<p class="text-justify mb-3">In our quest to foster a thriving technical community, we've built this platform to serve as a hub for knowledge exchange and problem-solving. Whether you're a seasoned developer seeking insight or a newcomer grappling with a coding challenge, our goal is to provide a welcoming space where everyone can contribute and benefit. By facilitating discussions, sharing expertise, and collaborating on solutions, we aim to empower individuals to overcome obstacles and expand their technical prowess.</p>
+				</div>
+			</div>
+		</div>
+
+
+
+
 		<!-- Ask Question button -->
-		<div class="mb-3">
-			<form action="<?php echo site_url('home/show_ask_form'); ?>" method="post">
-				<button type="submit" name="askButton" class="btn btn-success">Ask Question</button>
+		<div class="text-center mb-3">
+			<form action="<?php echo $this->session->userdata('user_id') ? site_url('question/ask_question') : site_url('user/login'); ?>" method="post">
+				<button type="submit" name="askButton" class="btn btn-success">Ask a Question</button>
 			</form>
 		</div>
 
-		<?php if ($showForm): ?>
-			<div id="askForm">
-				<?php echo validation_errors(); ?>
-				<form class="form-inline" action="<?php echo site_url('home/ask_question'); ?>" method="post">
-					<div class="form-group mb-2">
-						<input type="text" class="form-control" name="title" placeholder="Question Title">
-					</div>
-					<div class="form-group mx-sm-3 mb-2">
-						<input type="text" class="form-control" name="description" placeholder="Question Description">
-					</div>
-					<button type="submit" class="btn btn-primary mb-2">Submit</button>
-				</form>
-			</div>
-		<?php endif; ?>
-
-
-		<!-- List of questions -->
-		<div class="question-list">
-
-			<?php foreach ($questions as $question): ?>
-				<div class="card mb-3">
-					<div class="card-body">
-						<div class="d-flex justify-content-between align-items-center">
-							<h5 class="card-title"><?= $question['title'] ?></h5>
-							<p class="card-text text-right" style="font-size:small">by <span
-									class="font-weight-bold"><?= ucfirst(strtolower($question['username'])) ?></span>
-								<?= strtolower(timespan(strtotime($question['date_asked']), time(), 2)); ?> ago
-							</p>
-						</div>
-
-
-						<p class="card-text"><?= $question['description'] ?></p>
-						<p class="card-text">Answers: <?= $this->Question_model->get_answer_count($question['id']) ?></p>
-					</div>
-				</div>
-			<?php endforeach; ?>
-		</div>
+		
 	</div>
 
 </body>

@@ -4,7 +4,7 @@
 <div class="container">
 	<div class="d-flex justify-content-between align-items-baseline mt-5">
 		<div class="d-flex align-items-baseline">
-			<h1><a href="<?php echo site_url('home'); ?>" style="text-decoration: none; color: inherit;">Teqa Hub</a>
+			<h1><a href="<?php echo site_url('home'); ?>" style="text-decoration: none; color: inherit;">Q&Tech</a>
 			</h1>
 			<h2 style="margin-left: 10px;"><?= $title ?></h2>
 		</div>

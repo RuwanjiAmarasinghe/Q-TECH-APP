@@ -6,9 +6,28 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Profile</title>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/minty/bootstrap.min.css" integrity="sha384-H4X+4tKc7b8s4GoMrylmy2ssQYpDHoqzPa9aKXbDwPoPUA3Ra8PA5dGzijN+ePnH" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/lux/bootstrap.min.css">
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<style>
+		.question-list {
+			height: 400px;
+			overflow-y: auto;
+		}
+
+		.question-card {
+			transition: transform .5s;
+		}
+
+		.question-card:hover {
+			color: grey;
+		}
+
+		.question-card:active {
+			transform: scale(0.99);
+			color: grey;
+		}
+	</style>
 </head>
 
 <body>
@@ -53,36 +72,66 @@
 
 				<div class="tab-content" id="myTabContent">
 					<div class="tab-pane fade show active" id="questions" role="tabpanel">
-						<?php foreach ($questions as $question): ?>
-							<div class="card mb-3">
-								<div class="card-body">
-									<div class="d-flex justify-content-between align-items-center">
-										<h5 class="card-title"><?= $question['title'] ?></h5>
-										<p class="card-text text-right" style="font-size:small">
-											<?= strtolower(timespan(strtotime($question['date_asked']), time(), 2)); ?>
-											ago
-										</p>
-									</div>
-									<p class="card-text"><?= $question['description'] ?></p>
-									<p class="card-text">Answers:
-										<?= $this->Question_model->get_answer_count($question['id']) ?>
-									</p>
+						<div class="question-list">
+							<?php if (empty($questions)): ?>
+								<div class="alert alert-info" role="alert">
+									No questions found.
 								</div>
-							</div>
-						<?php endforeach; ?>
+							<?php endif; ?>
+							<?php foreach ($questions as $question): ?>
+								<a href="<?php echo site_url('question/view/' . $question['id']); ?>"
+									class="text-decoration-none" style="color:black; ">
+									<div class="card mb-3 question-card">
+										<div class="card-body">
+											<div class="d-flex justify-content-between align-items-center">
+
+												<h5 class="card-title"><?= $question['title'] ?></h5>
+												<p class="card-text text-right" style="font-size:small">
+													<?= strtolower(timespan(strtotime($question['date_asked']), time(), 2)); ?>
+													ago
+												</p>
+											</div>
+
+											<p class="card-text"><?= $question['description'] ?></p>
+											<p class="card-text">Answers:
+												<?= $this->Question_model->get_answer_count($question['id']) ?>
+											</p>
+										</div>
+									</div>
+								</a>
+
+							<?php endforeach; ?>
+						</div>
 
 					</div>
 					<div class="tab-pane fade" id="answers" role="tabpanel">
-
-						<?php foreach ($answers as $answer): ?>
-							<div class="card mb-3">
-								<div class="card-body">
-									<h5 class="card-title"><?= $answer['question_title'] ?></h5>
-									<p class="card-text"><?= $answer['answer'] ?></p>
+						<div class="question-list">
+							<?php if (empty($questions)): ?>
+								<div class="alert alert-info" role="alert">
+									No questions found.
 								</div>
-							</div>
+							<?php endif; ?>
 
-						<?php endforeach; ?>
+							<?php foreach ($answers as $answer): ?>
+								<a href="<?php echo site_url('question/view/' . $answer['question_id']); ?>"
+									class="text-decoration-none" style="color:black; ">
+									<div class="card mb-3 question-card">
+										<div class="card-body">
+											<div class="d-flex justify-content-between align-items-center">
+
+												<h5 class="card-title"><?= $answer['question_title'] ?></h5>
+												<p class="card-text text-right" style="font-size:small">
+													<?= strtolower(timespan(strtotime($question['date_asked']), time(), 2)); ?>
+													ago
+												</p>
+											</div>
+											<p class="card-text"><?= $answer['answer'] ?></p>
+										</div>
+									</div>
+								</a>
+
+							<?php endforeach; ?>
+						</div>
 
 					</div>
 				</div>

@@ -5,6 +5,7 @@ class Home extends CI_Controller
 {
 
 	protected $data = [];
+	protected $questions = [];
 
 	public function __construct()
 	{
@@ -12,58 +13,53 @@ class Home extends CI_Controller
 		$this->load->library('session');
 		$this->load->helper('url');
 		$this->load->helper('date');
-		$this->load->model('Question_model');
 		date_default_timezone_set('Asia/Colombo');
+		$this->load->model('Question_model');
 		$this->data['user_id'] = $this->session->userdata('user_id');
 		$this->data['username'] = $this->session->userdata('username');
 		$this->data['title'] = 'Home';
-		$this->data['questions'] = $this->Question_model->get_questions();
-
+		$this->questions = $this->Question_model->get_questions();
+		$this->data['questions'] = $this->questions;
+		$this->data['showForm'] = false;
 	}
 
 	public function index()
 	{
-
-		// Don't show the form initially
-		$this->data['showForm'] = false;
-
-		// Load the home view and pass the list of questions to it
 		$this->load->view('home', $this->data);
 	}
+
+
 
 	public function show_ask_form()
 	{
 		// Check if the user is logged in
 		if (!$this->session->userdata('user_id')) {
-			// Redirect the user to the login page
-			redirect('user/login');
+			$this->set_previous_url();
+			redirect('login');
 		}
 
 		$this->load->library('form_validation');
-
-
-		// Get the list of questions
-
 
 		$this->data['showForm'] = true;
 		$this->load->view('home', $this->data);
 	}
 
-	public function ask_question()
+	
+	public function ask_question() 
 	{
 		$this->load->library('form_validation');
 
 		$this->form_validation->set_rules('title', 'Title', 'required');
 		$this->form_validation->set_rules('description', 'Description', 'required');
 
-		// Get the question title and description
-		$title = $this->input->post('title');
-		$description = $this->input->post('description');
-
-
 		if ($this->form_validation->run() == FALSE) {
-			$this->show_ask_form();
+			// Load the ask_question view
+			$this->load->view('ask_question');
 		} else {
+			// Get the question title and description
+			$title = $this->input->post('title');
+			$description = $this->input->post('description');
+
 			// Get the user id
 			$user_id = $this->session->userdata('user_id');
 
@@ -73,9 +69,51 @@ class Home extends CI_Controller
 			// Redirect the user to the home page
 			redirect('home');
 		}
-
 	}
 
-}
 
-/* End of file Home.php and path \application\controllers\Home.php */
+	
+
+	public function search()
+	{
+
+		$search = trim($this->input->get('search'));
+
+		if (empty($search)) {
+			redirect('home');
+		} else {
+			//split search string into words
+			$search_words = explode(' ', $search);
+			$filtered_questions = [];
+			foreach ($search_words as $word) {
+
+				$filtered = array_filter($this->questions, function ($question) use ($word) {
+					return strpos(strtolower($question['title']), strtolower($word)) !== false;
+				});
+				$filtered_questions = array_merge($filtered_questions, $filtered);
+			}
+			$filtered_questions = array_unique($filtered_questions, SORT_REGULAR);
+
+			// Sort the filtered questions by date
+			usort($filtered_questions, function ($a, $b) {
+				return strtotime($b['date_asked']) - strtotime($a['date_asked']);
+			});
+
+			$this->data['questions'] = $filtered_questions;
+			$this->load->view('home', $this->data);
+		}
+	}
+
+
+
+	public function set_previous_url()
+	{
+		$this->session->set_userdata('previous_url', current_url());
+	}
+
+
+
+
+
+
+}

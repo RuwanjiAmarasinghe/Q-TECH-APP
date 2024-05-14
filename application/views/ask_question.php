@@ -33,19 +33,26 @@
 </head>
 
 <body>
-	<?php $this->load->view('Header'); ?>
+<?php 
+    $title = 'Ask Questions';
+    $data['username'] = $this->session->userdata('username');
+    $data['show_welcome'] = true; 
+    $data['title'] = $title;
+    $this->load->view('Header', $data); 
+    ?>
+	
     <div class="container">
-
+        
         <!-- ask_question.php -->
         <div class="container mt-4">
-            <h5 class="text-center">Ask a Question</h5>
+            <h5 class="text-center" style="margin-bottom: 20px; font-size: 20px; font-weight: bold;">Ask a Question</h5>
             <div id="askForm">
                 <?php echo validation_errors(); ?>
                 <div class="form-group w-100">
                     <form action="<?php echo site_url('home/ask_question'); ?>" method="post">
-                        <input type="text" class="form-control mb-3" name="title" placeholder="Question Title">
+                        <input type="text" class="form-control mb-3" name="title" placeholder="Question Title" style="border: 1px solid #ccc;">
                         <textarea type="text" class="form-control mb-3" name="description"
-                            placeholder="Question Description" rows="5"></textarea>
+                            placeholder="Question Description" rows="5" style="border: 1px solid #ccc;"></textarea>
                             <div class="text-right">
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </div>

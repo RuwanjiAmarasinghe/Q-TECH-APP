@@ -45,6 +45,9 @@ class Home extends CI_Controller
 	}
 
 	
+	
+	
+
 	public function ask_question() 
 	{
 		$this->load->library('form_validation');

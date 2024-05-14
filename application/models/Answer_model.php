@@ -8,7 +8,8 @@ class Answer_model extends CI_Model
 		$data = array(
 			'answer' => $answer,
 			'question_id' => $question_id,
-			'user_id' => $user_id
+			'user_id' => $user_id,
+			'date_answered' => date('Y-m-d H:i:s'),
 		);
 		return $this->db->insert('answers', $data);
 	}
@@ -20,6 +21,7 @@ class Answer_model extends CI_Model
 		$this->db->from('answers');
 		$this->db->join('questions', 'answers.question_id = questions.id');
 		$this->db->where('answers.user_id', $user_id);
+		$this->db->order_by('answers.date_answered', 'DESC');
 		$result = $this->db->get()->result_array();
 
 		if ($result === null) {
@@ -32,6 +34,7 @@ class Answer_model extends CI_Model
 	{
 		$this->db->where('user_id', $user_id);
 		$this->db->where('is_correct', 1); // Only get answers marked as correct
+		$this->db->order_by('date_answered', 'DESC');
 		$query = $this->db->get('answers');
 		return $query->result_array();
 	}

@@ -12,7 +12,8 @@
 
 <body>
 	<?php $this->load->view('header'); ?>
-	<div class="container" style="padding-top:8%;">
+	<div class="container" style="padding-top:4%;">
+	<h5 class="text-center" style="margin-bottom: 50px; font-size: 20px; font-weight: bold;">Register to Q&TECH</h5>
 		<div class="row justify-content-center">
 			<div class="col-md-6">
 				<?php if ($this->session->flashdata('error')): ?>
@@ -33,7 +34,7 @@
 						<label for="password">Password</label>
 						<input type="password" class="form-control" id="password" name="password" required>
 					</div>
-					<div class="form-group">
+					<div class="form-group text-center">
 						<button type="submit" class="btn btn-primary">Register</button>
 					</div>
 				</form>

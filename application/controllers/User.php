@@ -17,12 +17,11 @@ class User extends CI_Controller
 		date_default_timezone_set('Asia/Colombo');
 		$user_id = $this->session->userdata('user_id');
 		$this->user = $this->User_model->get_user($user_id);
-		if ($this->user !== null) {
+		if ($this->user !== null && is_array($this->user)) {
 			$this->data['user_id'] = $user_id;
 			$this->data['username'] = $this->user['username'];
 			$this->data['email'] = $this->user['email'];
 		}
-
 	}
 
 	public function register()

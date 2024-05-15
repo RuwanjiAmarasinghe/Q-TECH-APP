@@ -16,11 +16,12 @@ class Question extends CI_Controller
 		$this->load->helper('date');
 		date_default_timezone_set('Asia/Colombo');
 		$this->data['showForm'] = false;
+		$this->load->database();
 	}
 
 
 
-	public function show_answer_form($question_id)
+	public function display_answer_form($question_id)
 	{
 		// Check if the user is logged in
 		if (!$this->session->userdata('user_id')) {
@@ -48,7 +49,7 @@ class Question extends CI_Controller
 		$answer = $this->input->post('answer');
 
 		if ($this->form_validation->run() == FALSE) {
-			$this->show_answer_form($question_id);
+			$this->display_answer_form($question_id);
 		} else {
 			$this->load->model('Answer_model');
 
@@ -86,21 +87,31 @@ class Question extends CI_Controller
 		$this->Question_model->mark_as_solved($question_id);
 	}
 
-	public function delete_question()
+
+	public function deleteQuestion()
 	{
 		if (!$this->session->userdata('user_id')) {
 			// If the user is not logged in, redirect to the home page
 			redirect('home');
 		}
-		// Load the Question_model
-		$this->load->model('Question_model');
-
+	
 		// Get question id from post data
 		$question_id = $this->input->post('question_id');
-
+	
+		// Load the questionModel
+		$this->load->model('Question_model');
+	
+		// Delete answers associated with the question
+		$this->Question_model->deleteAnswersByQuestionId($question_id);
+	
 		// Delete the question
-		$this->Question_model->delete_question($question_id);
+		$this->Question_model->deleteQuestion($question_id);
+		log_message('debug', 'Question Deleted');
+	
+		// Redirect back to the question list
+		redirect('profile');
 	}
+
 
 	public function set_previous_url()
 	{

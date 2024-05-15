@@ -6,7 +6,6 @@
 	<meta charset="UTF-8">
 	<title>Login</title>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/lux/bootstrap.min.css">
-
 </head>
 
 <body>
@@ -44,3 +43,4 @@
 		</div>
 	</div>
 </body>
+</html>

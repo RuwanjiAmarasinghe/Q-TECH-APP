@@ -8,41 +8,47 @@ class Answer extends CI_Controller
 		parent::__construct();
 		$this->load->library('session');
 		$this->load->helper('url');
+		$this->load->database();
+		$this->load->model('Answer_model');
 	}
 
-	public function mark_as_correct()
+	
+	public function marked_correct()
+	{
+			if (!$this->session->userdata('user_id')) {
+				redirect('login');
+			}
+			$answer_id = $this->input->post('answer_id');
+			$question_id = $this->input->post('question_id');
+			$this->Answer_model->marked_correct($answer_id, $question_id, $this->session->userdata('user_id'));
+			redirect('question/view/' . $question_id);
+	}
+
+
+
+	public function delete_answer()
 	{
 		if (!$this->session->userdata('user_id')) {
-			// If the user is not logged in, redirect to the home page
-			redirect('login');
+			// redirecting to the home page if the user is not logged in
+			redirect('home');
 		}
-
-		// Load the Answer_model
+		// Loading the Answer_model
 		$this->load->model('Answer_model');
 
 		// Get answer id from post data
 		$answer_id = $this->input->post('answer_id');
 		$question_id = $this->input->post('question_id');
 
-		// Mark the answer as correct
-		$this->Answer_model->mark_as_correct($answer_id, $question_id, $this->session->userdata('user_id'));
-		redirect('question/view/' . $question_id);
-	}
-
-	public function delete_answer()
-	{
-		if (!$this->session->userdata('user_id')) {
-			// If the user is not logged in, redirect to the home page
-			redirect('home');
-		}
-		// Load the Answer_model
-		$this->load->model('Answer_model');
-
-		// Get answer id from post data
-		$answer_id = $this->input->post('answer_id');
+		$this->db->where('answer_id', $answer_id);
+		$this->db->delete('votes');
 
 		// Delete the answer
-		$this->Answer_model->delete_answer($answer_id);
+		$this->db->where('id', $answer_id);
+		$this->db->delete('answers');
+		// Redirect back to the question view
+		redirect('profile');
+
+		
 	}
 
 	public function set_previous_url()

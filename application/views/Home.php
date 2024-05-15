@@ -50,8 +50,8 @@
 			</div>
 		</div>
 
-		<!-- Welcome Message -->
-        <div class="container mt-4">
+		<!-- Welcome Message of the page -->
+        <div class="container mt-4" style="padding-top: 4%;">
 			<h5 class="text-center">Welcome to</h5>
     		<h1 style="font-size: 3.1rem; text-align: center; font-weight: 2000 !important;">Q&TECH</h1>
 			<div class="row justify-content-center">

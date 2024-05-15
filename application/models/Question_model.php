@@ -74,11 +74,38 @@ class Question_model extends CI_Model
 		return $this->db->update('questions', array('solved' => 1));
 	}
 
-	public function delete_question($question_id)
+
+	public function deleteAnswersByQuestionId($question_id)
+	{
+		// Get all answer ids for the question
+		$this->db->select('id');
+		$this->db->from('answers');
+		$this->db->where('question_id', $question_id);
+		$query = $this->db->get();
+		$answer_ids = $query->result_array();
+	
+		// Delete votes for these answers
+		foreach ($answer_ids as $answer_id) {
+			$this->db->where('answer_id', $answer_id['id']);
+			$this->db->delete('votes');
+		}
+	
+		// Delete the answers
+		$this->db->where('question_id', $question_id);
+		$this->db->delete('answers');
+	}
+
+
+	public function deleteQuestion($question_id)
 	{
 		$this->db->where('id', $question_id);
 		return $this->db->delete('questions');
+
+		// Delete associated answers
+		$this->db->where('question_id', $question_id);
+		$this->db->delete('answers');
 	}
+
 
 	public function get_answer_count($question_id)
 	{
@@ -87,4 +114,6 @@ class Question_model extends CI_Model
 
 		return $query->num_rows();
 	}
+
+	
 }

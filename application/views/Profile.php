@@ -69,7 +69,7 @@
         </div>
 
         <div class="row justify-content-center mt-4">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="mb-3">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
@@ -110,6 +110,13 @@
                                             <p class="card-text">Answers:
                                                 <?= $this->Question_model->get_answer_count($question['id']) ?>
                                             </p>
+                                            <?php if ($question['user_id'] == $user_id): ?>
+                                                <form action="<?php echo site_url('question/deleteQuestion'); ?>" method="post">
+                                                    <input type="hidden" name="question_id" value="<?php echo $question['id']; ?>">
+                                                    <input type="hidden" name="question_id" value="<?= $question['id']; ?>">
+                                                    <button type="submit" class="btn btn-danger float-right">Delete</button>
+                                                </form>
+                                            <?php endif; ?>
                                         </div>
                                     </div>
                                 </a>
@@ -135,11 +142,19 @@
 
                                                 <h5 class="card-title"><?= $answer['question_title'] ?></h5>
                                                 <p class="card-text text-right" style="font-size:small">
-                                                    <?= strtolower(timespan(strtotime($question['date_asked']), time(), 2)); ?>
-                                                    ago
+                                                    <?= strtolower(timespan(strtotime($answer['date_answered']), time(), 2)); ?> ago
+                                                    
                                                 </p>
                                             </div>
                                             <p class="card-text"><?= $answer['answer'] ?></p>
+                                            <?php if ($user_id && $user_id == $answer['user_id']): ?>
+                                                <form action="<?= site_url('answer/delete_answer'); ?>" method="post">
+                                                    <input type="hidden" name="answer_id" value="<?= $answer['id']; ?>">
+                                                    <input type="hidden" name="question_id" value="<?= $question['id']; ?>">
+                                                    <button type="submit" class="btn btn-danger btn-sm float-right">Delete</button>
+                                                </form>
+                                            <?php endif; ?>
+
                                         </div>
                                     </div>
                                 </a>

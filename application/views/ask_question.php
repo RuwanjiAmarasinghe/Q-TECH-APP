@@ -1,67 +1,100 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
-	<title>Q&TECH</title>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/lux/bootstrap.min.css">
-	<style>
-		.question-list {
-			height: 400px;
-			overflow-y: auto;
-		}
+    <meta charset="UTF-8">
+    <title>Q&TECH</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/lux/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.13.1/underscore-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.4.0/backbone-min.js"></script>
 
-		.question-card {
-			transition: transform .5s;
-		}
-
-		.question-card:hover {
-			color: grey;
-		}
-
-		.question-card:active {
-			transform: scale(0.99);
-			color: grey;
-		}
-		.form-control:focus {
+    <style>
+        .form-control:focus {
             background-color: #808080;
-            color: #fff; 
+            color: #fff;
         }
-	</style>
+
+        .strong {
+            font-weight: bold;
+            font-size: 25px;
+        }
+    </style>
 </head>
 
 <body>
-<?php 
-    $title = 'Ask Questions';
+    <?php 
+    $title = 'Ask Question';
     $data['username'] = $this->session->userdata('username');
     $data['show_welcome'] = true; 
     $data['title'] = $title;
     $this->load->view('Header', $data); 
     ?>
-	
+
     <div class="container">
-        
+
         <!-- ask_question.php -->
-        <div class="container mt-4">
-            <h5 class="text-center" style="margin-bottom: 20px; font-size: 20px; font-weight: bold;">Ask a Question</h5>
+        <div class="container" style="padding-top: 4%;">
+            <h5 class="text-center" style="margin-bottom: 30px; font-size: 35px; font-weight: bold;">Ask a Public
+                Question</h5>
             <div id="askForm">
                 <?php echo validation_errors(); ?>
                 <div class="form-group w-100">
-                    <form action="<?php echo site_url('home/ask_question'); ?>" method="post">
-                        <input type="text" class="form-control mb-3" name="title" placeholder="Question Title" style="border: 1px solid #ccc;">
-                        <textarea type="text" class="form-control mb-3" name="description"
-                            placeholder="Question Description" rows="5" style="border: 1px solid #ccc;"></textarea>
-                            <div class="text-right">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </div>
+                    <!-- Use Backbone.js for form submission -->
+                    <form id="askQuestionForm" method="post">
+
+                        <label for="title" class="strong">Title</label>
+                        <p class="text-body-tertiary">Be specific and imagine you’re asking a question to another
+                            person.</p>
+                        <input type="text" class="form-control mb-4" name="title" id="title"
+                            placeholder="Question Title" style="border: 1px solid #ccc;">
+
+                        <label for="description" class="strong">Description</label>
+                        <p class="text-body-tertiary">Introduce the problem and expand on what you put in the
+                            title.</p>
+                        <textarea type="text" class="form-control mb-3" name="description" id="description"
+                            placeholder="Question Description" rows="5"
+                            style="border: 1px solid #ccc;"></textarea>
+
+                        <div class="text-center">
+                            <button type="button" id="submitBtn" class="btn btn-primary"
+                                style="font-size: 20px; padding: 10px 20px;">Submit</button>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 
+    <script>
+        $(document).ready(function() {
+            // Define a function to handle form submission
+            $('#submitBtn').click(function() {
+                // Get form data
+                var formData = {
+                    title: $('#title').val(),
+                    description: $('#description').val()
+                };
+
+                // Send an AJAX POST request to the server
+                $.ajax({
+                    type: 'POST',
+                    url: '<?php echo site_url('home/ask_question'); ?>',
+                    data: formData,
+                    success: function(response) {
+                        // Redirect to home page after successful submission
+                        console.log('Question saved successfully');
+                        window.location.href = '<?php echo site_url('home'); ?>';
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle errors, e.g., display error message
+                        console.error(xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>

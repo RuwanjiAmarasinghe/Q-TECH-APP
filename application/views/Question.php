@@ -6,8 +6,10 @@
 <head>
 	<meta charset="UTF-8">
 	<title><?= $question['title'] ?></title>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/lux/bootstrap.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.13.1/underscore-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.4.0/backbone-min.js"></script>
 </head>
 
 <body>
@@ -36,7 +38,7 @@
 
 
 			<div class="col-md-6 text-right">
-				<form action="<?php echo site_url('question/view/' . $question['id'] . '/show_answer_form') ?>"
+				<form action="<?php echo site_url('question/view/' . $question['id'] . '/display_answer_form') ?>"
 					method="post">
 					<button type="submit" name="answerButton" class="btn btn-success">Add Answer</button>
 				</form>
@@ -86,7 +88,7 @@
 						<div class="w-100">
 							<p class="card-text"><?= $answer['answer'] ?></p>
 							<?php if ($this->session->userdata('user_id') == $question['user_id'] && !($answer['is_correct'])): ?>
-								<form action="<?php echo site_url('answer/mark_as_correct') ?>" method="post">
+								<form action="<?php echo site_url('answer/marked_correct') ?>" method="post">
 									<input type="hidden" name="answer_id" value="<?= $answer['id'] ?>">
 									<input type="hidden" name="question_id" value="<?= $question['id'] ?>">
 									<button type="submit" class="btn btn-success">Mark as Correct</button>
@@ -108,7 +110,39 @@
 
 	</div>
 
+	<script>
+        $(document).ready(function() {
+            $('#showAnswerForm').click(function() {
+                $('#answerForm').toggle();
+            });
 
+            var Answer = Backbone.Model.extend({
+                urlRoot: '<?php echo site_url('question/view/' . $question['id'] . '/answer/submit'); ?>'
+            });
+
+            var AnswerView = Backbone.View.extend({
+                el: '#addAnswerForm',
+                events: {
+                    'submit': 'submitForm'
+                },
+                submitForm: function(e) {
+                    e.preventDefault();
+                    var answer = this.$('textarea[name="answer"]').val();
+                    var newAnswer = new Answer({ answer: answer });
+                    newAnswer.save(null, {
+                        success: function(model, response) {
+                            window.location.reload();
+                        },
+                        error: function(model, response) {
+                            console.error(response.responseText);
+                        }
+                    });
+                }
+            });
+
+            var answerView = new AnswerView();
+        });
+    </script>
 
 </body>
 

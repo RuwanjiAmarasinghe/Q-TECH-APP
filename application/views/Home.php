@@ -50,7 +50,7 @@
 			</div>
 		</div>
 
-		<!-- Welcome Message of the page -->
+		<!-- Welcome to Q&TECH-->
         <div class="container mt-4" style="padding-top: 4%;">
 			<h5 class="text-center">Welcome to</h5>
     		<h1 style="font-size: 3.1rem; text-align: center; font-weight: 2000 !important;">Q&TECH</h1>
@@ -95,7 +95,7 @@
 			<h2 class="text-center" style="margin-bottom: 40px;">Latest Questions</h2>
 		<?php endif; ?>
 
-		<!-- List of questions -->
+		<!-- Q&TECH-question-list-->
 		<div class="question-list">
 			<?php if (empty($questions)): ?>
 				<div class="alert alert-info" role="alert">

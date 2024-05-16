@@ -34,7 +34,7 @@ class Home extends CI_Controller
 	{
 		// Check if the user is logged in
 		if (!$this->session->userdata('user_id')) {
-			$this->set_previous_url();
+			$this->before_page_url();
 			redirect('login');
 		}
 
@@ -56,20 +56,19 @@ class Home extends CI_Controller
 		$this->form_validation->set_rules('description', 'Description', 'required');
 
 		if ($this->form_validation->run() == FALSE) {
-			// Load the ask_question view
+			
 			$this->load->view('ask_question');
 		} else {
 			// Get the question title and description
 			$title = $this->input->post('title');
 			$description = $this->input->post('description');
 
-			// Get the user id
 			$user_id = $this->session->userdata('user_id');
 
 			// Insert the question into the database
 			$this->Question_model->ask_question($title, $description, $user_id);
 
-			// Redirect the user to the home page
+			
 			redirect('home');
 		}
 	}
@@ -109,7 +108,7 @@ class Home extends CI_Controller
 
 
 
-	public function set_previous_url()
+	public function before_page_url()
 	{
 		$this->session->set_userdata('previous_url', current_url());
 	}

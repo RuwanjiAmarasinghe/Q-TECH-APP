@@ -9,19 +9,19 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/lux/bootstrap.min.css">
 	<style>
         body {
-            font-size: 1.0rem; /* Adjust this value to increase or decrease the font size */
+            font-size: 1.0rem; 
         }
 		.navbar {
-            font-size: 1.0rem; /* Adjust this value to increase or decrease the font size of the navbar */
+            font-size: 1.0rem; 
         }
 		.navbar-brand {
-            font-size: 1.5rem; /* Adjust this value to increase or decrease the font size of the navbar brand */
+            font-size: 1.5rem; 
         }
 		
     </style>
 </head>
 <body>
-<!-- header.php -->
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" data-bs-theme="dark">
     <a class="navbar-brand" href="<?php echo site_url('home'); ?>">Q&TECH</a>
     <div class="collapse navbar-collapse">

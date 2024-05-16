@@ -13,7 +13,7 @@ class Vote_model extends CI_Model
 
 	public function vote_answer($answer_id, $user_id, $vote_type)
 	{
-		// Check if a vote by this user on this answer already exists
+		
 		$this->db->where('user_id', $user_id);
 		$this->db->where('answer_id', $answer_id);
 

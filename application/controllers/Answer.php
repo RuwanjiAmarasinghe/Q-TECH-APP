@@ -29,10 +29,10 @@ class Answer extends CI_Controller
 	public function delete_answer()
 	{
 		if (!$this->session->userdata('user_id')) {
-			// redirecting to the home page if the user is not logged in
+		
 			redirect('home');
 		}
-		// Loading the Answer_model
+	
 		$this->load->model('Answer_model');
 
 		// Get answer id from post data
@@ -45,13 +45,13 @@ class Answer extends CI_Controller
 		// Delete the answer
 		$this->db->where('id', $answer_id);
 		$this->db->delete('answers');
-		// Redirect back to the question view
+	
 		redirect('profile');
 
 		
 	}
 
-	public function set_previous_url()
+	public function before_page_url()
 	{
 		$this->session->set_userdata('previous_url', current_url());
 	}

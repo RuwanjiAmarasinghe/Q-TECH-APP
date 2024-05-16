@@ -23,10 +23,10 @@ class Question extends CI_Controller
 
 	public function display_answer_form($question_id)
 	{
-		// Check if the user is logged in
+		// Checking if the user is logged in
 		if (!$this->session->userdata('user_id')) {
-			// Redirect the user to the login page
-			$this->set_previous_url();
+			
+			$this->before_page_url();
 			redirect('login');
 		}
 
@@ -77,13 +77,11 @@ class Question extends CI_Controller
 			// If the user is not logged in, redirect to the home page
 			redirect('home');
 		}
-		// Load the Question_model
+	
 		$this->load->model('Question_model');
 
-		// Get question id from post data
 		$question_id = $this->input->post('question_id');
 
-		// Mark the question as solved
 		$this->Question_model->mark_as_solved($question_id);
 	}
 
@@ -95,25 +93,21 @@ class Question extends CI_Controller
 			redirect('home');
 		}
 	
-		// Get question id from post data
 		$question_id = $this->input->post('question_id');
 	
-		// Load the questionModel
 		$this->load->model('Question_model');
-	
-		// Delete answers associated with the question
+
 		$this->Question_model->deleteAnswersByQuestionId($question_id);
 	
-		// Delete the question
+		// Deleting the question
 		$this->Question_model->deleteQuestion($question_id);
 		log_message('debug', 'Question Deleted');
 	
-		// Redirect back to the question list
 		redirect('profile');
 	}
 
 
-	public function set_previous_url()
+	public function before_page_url()
 	{
 		$this->session->set_userdata('previous_url', current_url());
 	}

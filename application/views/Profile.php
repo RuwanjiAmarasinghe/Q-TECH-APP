@@ -28,21 +28,19 @@
             color: grey;
         }
 
-        /* Styling for question cards */
         .question-card .card-body {
-            background-color: #343a40; /* Dark background */
+            background-color: #343a40;
         }
 
         .question-card .card-title,
         .question-card .card-text {
-            color: #fff; /* White text */
+            color: #fff; 
         }
 
         .question-card.mb-3 {
-            margin-bottom: 20px; /* Space between question cards */
+            margin-bottom: 20px; 
         }
 
-        /* Remove the outline */
         .card-outline {
             border: none;
         }
@@ -55,14 +53,14 @@
         <h5 class="text-center" style="margin-bottom: 35px; font-size: 35px; font-weight: bold;">Your Profile</h5>
         <div class="row justify-content-center">
             <div class="col-md-4">
-                <!-- User details -->
+                <!--details -->
                 <div class="card bg-light mb-3">
                     <div class="card-body">
                         <h5 class="card-title">Username: <?= $username ?></h5>
                         <p class="card-text">Email: <?= $email ?></p>
                         <p class="card-text">Questions: <?= $num_questions ?></p>
                         <p class="card-text">Correct answers: <?= $num_correct_answers ?></p>
-                        <p class="card-text">Votes Recieved: <?= $total_votes ?></p>
+                        <p class="card-text">Votes you Recieved: <?= $total_votes ?></p>
                     </div>
                 </div>
             </div>
@@ -77,8 +75,7 @@
                                 role="tab">Questions Asked</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="answers-tab" data-toggle="tab" href="#answers" role="tab">Answers
-                                Given</a>
+                            <a class="nav-link" id="answers-tab" data-toggle="tab" href="#answers" role="tab">Answers you have Given</a>
                         </li>
                     </ul>
                 </div>

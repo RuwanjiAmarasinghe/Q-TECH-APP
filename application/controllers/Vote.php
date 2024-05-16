@@ -13,14 +13,14 @@ class Vote extends CI_Controller
 	{
 
 		if (!$this->session->userdata('user_id')) {
-			$this->set_previous_url();
-			// If the user is not logged in, redirect to the home page
+			$this->before_page_url();
+	
 			redirect('login');
 		} else {
-			// Load the Vote_model
+			
 			$this->load->model('Vote_model');
 
-			// Get user id from session
+	
 			$user_id = $this->session->userdata('user_id');
 
 			$question_id = $this->uri->segment(2);
@@ -36,13 +36,13 @@ class Vote extends CI_Controller
 
 
 
-			// Redirect the user to the question page
+	
 			redirect('question/view/' . $question_id);
 
 		}
 	}
 
-	public function set_previous_url()
+	public function before_page_url()
 	{
 		$this->session->set_userdata('previous_url', current_url());
 	}
@@ -50,4 +50,4 @@ class Vote extends CI_Controller
 }
 
 
-/* End of file Vote.php and path \application\controllers\Vote.php */
+

@@ -45,7 +45,7 @@ class Answer_model extends CI_Model
 	public function get_correct_answers_by_user($user_id)
 	{
 		$this->db->where('user_id', $user_id);
-		$this->db->where('is_correct', 1); // Only get answers marked as correct
+		$this->db->where('is_correct', 1); 
 		$this->db->order_by('date_answered', 'DESC');
 		$query = $this->db->get('answers');
 		return $query->result_array();
@@ -59,6 +59,3 @@ class Answer_model extends CI_Model
 	}
 }
 
-
-
-/* End of file Answer_model.php and path \application\models\Answer_model.php */

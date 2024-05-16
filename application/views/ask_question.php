@@ -34,14 +34,12 @@
 
     <div class="container">
 
-        <!-- ask_question.php -->
         <div class="container" style="padding-top: 4%;">
             <h5 class="text-center" style="margin-bottom: 30px; font-size: 35px; font-weight: bold;">Ask a Public
                 Question</h5>
             <div id="askForm">
                 <?php echo validation_errors(); ?>
                 <div class="form-group w-100">
-                    <!-- Use Backbone.js for form submission -->
                     <form id="askQuestionForm" method="post">
 
                         <label for="title" class="strong">Title</label>
@@ -83,12 +81,12 @@
                     url: '<?php echo site_url('home/ask_question'); ?>',
                     data: formData,
                     success: function(response) {
-                        // Redirect to home page after successful submission
+                        // after successful submission
                         console.log('Question saved successfully');
                         window.location.href = '<?php echo site_url('home'); ?>';
                     },
                     error: function(xhr, status, error) {
-                        // Handle errors, e.g., display error message
+                        // Handle errors
                         console.error(xhr.responseText);
                     }
                 });

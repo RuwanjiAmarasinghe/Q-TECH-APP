@@ -77,14 +77,14 @@ class Question_model extends CI_Model
 
 	public function deleteAnswersByQuestionId($question_id)
 	{
-		// Get all answer ids for the question
+	
 		$this->db->select('id');
 		$this->db->from('answers');
 		$this->db->where('question_id', $question_id);
 		$query = $this->db->get();
 		$answer_ids = $query->result_array();
 	
-		// Delete votes for these answers
+		// Delete votes 
 		foreach ($answer_ids as $answer_id) {
 			$this->db->where('answer_id', $answer_id['id']);
 			$this->db->delete('votes');
@@ -101,7 +101,6 @@ class Question_model extends CI_Model
 		$this->db->where('id', $question_id);
 		return $this->db->delete('questions');
 
-		// Delete associated answers
 		$this->db->where('question_id', $question_id);
 		$this->db->delete('answers');
 	}

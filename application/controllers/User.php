@@ -27,26 +27,26 @@ class User extends CI_Controller
 	public function register()
 	{
 		if ($this->session->userdata('user_id')) {
-			// If the user is already logged in, redirect to the home page
+	
 			redirect('home');
 		}
 
 		$this->data['title'] = 'Register';
-		// Check if the form was submitted
+
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-			// Get user input
+		
 			$username = $this->input->post('username');
 			$password = $this->input->post('password');
 			$email = $this->input->post('email');
 
-			// Register the user
+	
 			$registered = $this->User_model->register($username, $password, $email);
 			if (isset($registered['success'])) {
-				// If the user was registered successfully, redirect to the login page
+				
 				redirect('login');
 			} else {
-				// If the user registration failed, load the registration view
+			
 				$this->data['error'] = $registered['error'];
 				$this->load->view('register', $this->data);
 			}
@@ -61,23 +61,23 @@ class User extends CI_Controller
 	{
 
 		if ($this->session->userdata('user_id')) {
-			// If the user is already logged in, redirect to the home page
+
 			redirect('home');
 		}
 
 		$this->data['title'] = 'Login';
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-			// Get user input
+		
 			$username = $this->input->post('username');
 			$password = $this->input->post('password');
 
-			// Login the user
+		
 			$user = $this->User_model->login($username, $password);
 
 			if (is_object($user) && !isset($user->error)) {
 
-				// Set the user's session data
+			
 				$this->session->set_userdata('user_id', $user->id);
 				$this->session->set_userdata('username', $user->username);
 
@@ -106,19 +106,18 @@ class User extends CI_Controller
 	{
 
 		if (!$this->session->userdata('user_id')) {
-			// If the user is not logged in, redirect to the home page
+			// not logged in - redirect to the home page
 			redirect('home');
 		}
-		// Destroy the user's session
+	
 		$this->session->sess_destroy();
 
-		// Redirect to the login page
 		redirect('home');
 	}
 
 	public function delete_account()
 	{
-		// Get user id from session
+		
 		$user_id = $this->session->userdata('user_id');
 
 		// Delete the user account
@@ -130,7 +129,7 @@ class User extends CI_Controller
 		$this->data['title'] = 'Profile';
 
 		if (!$this->session->userdata('user_id')) {
-			// If the user is not logged in, redirect to the home page
+	
 			redirect('login');
 		}
 		$this->load->model('Question_model');

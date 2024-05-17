@@ -115,14 +115,6 @@ class User extends CI_Controller
 		redirect('home');
 	}
 
-	public function delete_account()
-	{
-		
-		$user_id = $this->session->userdata('user_id');
-
-		// Delete the user account
-		$this->User_model->delete_account($user_id);
-	}
 
 	public function profile()
 	{

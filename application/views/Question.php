@@ -7,6 +7,7 @@
 	<meta charset="UTF-8">
 	<title><?= $question['title'] ?></title>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/lux/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.13.1/underscore-min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.4.0/backbone-min.js"></script>
@@ -17,16 +18,14 @@
 
 	<div class="container mt-5">
 		<h2><?= $question['title'] ?></h2>
+		<?php if ($question['is_solved'] == 1): ?>
+			<span class="badge badge-success">Question Solved</span>
+		<?php endif; ?>
 		<p><?= $question['description'] ?></p>
 		<p class="card-text text-right" style="font-size:small">asked by <span
 				class="font-weight-bold"><?= ucfirst(strtolower($question['username'])) ?></span>
 			<?= strtolower(timespan(strtotime($question['date_asked']), time(), 2)); ?> ago
 		</p>
-
-		<?php if ($question['is_solved']): ?>
-			<p class="text-success">This question has been solved</p>
-
-		<?php endif; ?>
 
 		<hr>
 

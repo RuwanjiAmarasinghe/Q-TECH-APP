@@ -34,8 +34,7 @@ class Vote extends CI_Controller
 			// Vote the answer
 			$this->Vote_model->vote_answer($answer_id, $user_id, $vote_type);
 
-
-
+			log_message('debug', 'Voted answer');
 	
 			redirect('question/view/' . $question_id);
 

@@ -147,7 +147,7 @@
                                             <?php if ($user_id && $user_id == $answer['user_id']): ?>
                                                 <form action="<?= site_url('answer/delete_answer'); ?>" method="post">
                                                     <input type="hidden" name="answer_id" value="<?= $answer['id']; ?>">
-                                                    <input type="hidden" name="question_id" value="<?= $question['id']; ?>">
+                                                    <input type="hidden" name="question_id" value="<?= $answer['question_id']; ?>">
                                                     <button type="submit" class="btn btn-danger btn-sm float-right">Delete</button>
                                                 </form>
                                             <?php endif; ?>

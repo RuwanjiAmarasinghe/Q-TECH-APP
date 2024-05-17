@@ -67,8 +67,7 @@ class Home extends CI_Controller
 
 			// Insert the question into the database
 			$this->Question_model->ask_question($title, $description, $user_id);
-
-			
+			log_message('debug', 'Question asked');			
 			redirect('home');
 		}
 	}
@@ -112,10 +111,6 @@ class Home extends CI_Controller
 	{
 		$this->session->set_userdata('previous_url', current_url());
 	}
-
-
-
-
 
 
 }

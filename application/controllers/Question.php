@@ -83,6 +83,7 @@ class Question extends CI_Controller
 		$question_id = $this->input->post('question_id');
 
 		$this->Question_model->mark_as_solved($question_id);
+		log_message('debug','solved');
 	}
 
 

@@ -45,7 +45,7 @@ class Answer extends CI_Controller
 		// Delete the answer
 		$this->db->where('id', $answer_id);
 		$this->db->delete('answers');
-	
+		log_message('debug', 'Deleted answer');
 		redirect('profile');
 
 		

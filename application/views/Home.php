@@ -17,14 +17,6 @@
 			transition: transform .5s;
 		}
 
-		.question-card:hover {
-			color: grey;
-		}
-
-		.question-card:active {
-			transform: scale(0.99);
-			color: grey;
-		}
 		.form-control:focus {
             background-color: #808080;
             color: #fff; 
@@ -50,7 +42,7 @@
 			</div>
 		</div>
 
-		<!-- Welcome to Q&TECH-->
+	
         <div class="container mt-4" style="padding-top: 4%;">
 			<h5 class="text-center">Welcome to</h5>
     		<h1 style="font-size: 3.1rem; text-align: center; font-weight: 2000 !important;">Q&TECH</h1>
@@ -71,8 +63,8 @@
 				<?php endif; ?>
 			</div>
 		<?php else: ?>
-			<hr>
-			<h5>Ask a Question</h5>
+			
+			
 			<div id="askForm">
 				<?php echo validation_errors(); ?>
 				<div class="form-group w-100">
@@ -81,7 +73,7 @@
 						<textarea type="text" class="form-control mb-3" name="description"
 							placeholder="Question Description" rows="5"></textarea>
 							<div class="text-right">
-                				<button type="submit" class="btn btn-primary">Submit</button>
+                				<button type="submit" class="btn btn-primary">Submit-question</button>
             				</div>
 					</form>
 				</div>
@@ -95,11 +87,11 @@
 			<h2 class="text-center" style="margin-bottom: 40px;">Latest Questions</h2>
 		<?php endif; ?>
 
-		<!-- Q&TECH-question-list-->
+
 		<div class="question-list">
 			<?php if (empty($questions)): ?>
 				<div class="alert alert-info" role="alert">
-					No questions found.
+					No related questions are found.
 				</div>
 			<?php endif; ?>
 			<?php foreach ($questions as $question): ?>
@@ -117,7 +109,7 @@
 							</div>
 
 							<p class="card-text"><?= $question['description'] ?></p>
-							<p class="card-text">Answers: <?= $this->Question_model->get_answer_count($question['id']) ?>
+							<p class="card-text">Answers: <?= $this->Question_model->obtainAnswerCount($question['id']) ?>
 							</p>
 						</div>
 					</div>

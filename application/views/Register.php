@@ -33,7 +33,7 @@
 						<input class="form-control" type="password" id="password" name="password" required>
 					</div>
 					<div class="form-group text-center">
-						<button type="submit" class="btn btn-primary">Create an account</button>
+						<button type="submit" class="btn btn-primary">Create an user-account</button>
 					</div>
 				</form>
 			</div>

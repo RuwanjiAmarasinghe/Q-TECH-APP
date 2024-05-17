@@ -32,12 +32,12 @@
         </ul>
         <?php if (isset($show_welcome) && $show_welcome && isset($username)): ?>
             <div class="navbar-text" style="margin-right: 15px;">
-                Welcome, <a href="<?php echo site_url('user/profile'); ?>"><?= $username ?></a>
+                Hi, <a href="<?php echo site_url('user/profile'); ?>"><?= $username ?></a>
             </div>
         <?php endif; ?>
         <?php if (isset($user_id) && $user_id): ?>
             <div class="navbar-text" style="margin-right: 15px;">
-                Welcome, <a href="<?php echo site_url('user/profile'); ?>"><?= $username ?></a>
+                Hi, <a href="<?php echo site_url('user/profile'); ?>"><?= $username ?></a>
             </div>
             <?php if (isset($title) && ($title == 'Profile')): ?>
                 <form class="form-inline" action="<?php echo site_url('user/logout'); ?>" method="post">

@@ -22,22 +22,21 @@ class User_model extends CI_Model
 		$result = $this->db->get('users');
 
 		if ($result->num_rows() > 0) {
-			return array('error' => 'Username already exists. Please choose a different one.');
+			return array('error' => 'Username already taken. Please select a different one.');
 		}
 
-		// Check if email already exists
 		$this->db->where('email', $email);
 		$result = $this->db->get('users');
 
 		if ($result->num_rows() > 0) {
 			
-			return array('error' => 'Email already exists. Please choose a different one.');
+			return array('error' => '"Email already in use. Please choose another one.');
 		}
 
-		// Check if password is valid
+
 		if (strlen($password) < 8) {
 	
-			return array('error' => 'Password should be at least 8 characters long.');
+			return array('error' => 'Password must be at least 8 characters.');
 		}
 
 	
@@ -49,33 +48,28 @@ class User_model extends CI_Model
 
 		$this->db->insert('users', $data);
 
-		return array('success' => 'Registration successful. You can now log in.');
+		return array('success' => 'Registration complete. You can log in.');
 	}
 
 	public function login($username, $password)
 	{
-		// username and password are not empty
+	
 		if (empty($username) || empty($password)) {
-			return array('error' => 'Username and password are required.');
+			return array('error' => 'required categories - username, password.');
 		}
 
 		$this->db->where('username', $username);
 		$user = $this->db->get('users')->row();
 
-		// user exists and password is correct
+	
 		if ($user && password_verify($password, $user->password)) {
 			return $user;
 		}
 
-		// If user doesn't exist or password is incorrect
-		return array('error' => 'Invalid username or password.');
+	
+		return array('error' => 'Invalid categories: username or password.');
 
 	}
 
-	public function delete_account($user_id)
-	{
-		$this->db->where('id', $user_id);
-		return $this->db->delete('users');
-	}
 }
 

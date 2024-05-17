@@ -31,15 +31,15 @@
 
 		<div class="row mb-3">
 			<div class="col-md-6">
-				<h5>Answers</h5>
+				<h5>Answers-given</h5>
 			</div>
 
 
 
 			<div class="col-md-6 text-right">
-				<form action="<?php echo site_url('question/view/' . $question['id'] . '/display_answer_form') ?>"
+				<form action="<?php echo site_url('question/view/' . $question['id'] . '/viewTheAnswerForm') ?>"
 					method="post">
-					<button type="submit" name="answerButton" class="btn btn-success">Add Answer</button>
+					<button type="submit" name="answerButton" class="btn btn-success">Add an Answer</button>
 				</form>
 			</div>
 		</div>
@@ -54,17 +54,17 @@
 					<form action="<?php echo site_url('question/view/' . $question['id'] . '/answer/submit'); ?>"
 						method="post">
 						<div class="form-group">
-							<textarea type="text" class="form-control" name="answer" placeholder="Enter Answer"></textarea>
+							<textarea type="text" class="form-control" name="answer" placeholder="Enter your Answer here"></textarea>
 						</div>
 
-						<button type="submit" class="btn btn-primary">Submit</button>
+						<button type="submit" class="btn btn-primary">Submit-answer</button>
 					</form>
 				</div>
 			</div>
 		<?php endif; ?>
 
 		<?php if (empty($question['answers'])): ?>
-			<p>No answers yet.</p>
+			<p>Nothing yet.</p>
 		<?php else: ?>
 
 
@@ -87,7 +87,7 @@
 						<div class="w-100">
 							<p class="card-text"><?= $answer['answer'] ?></p>
 							<?php if ($this->session->userdata('user_id') == $question['user_id'] && !($answer['is_correct'])): ?>
-								<form action="<?php echo site_url('answer/marked_correct') ?>" method="post">
+								<form action="<?php echo site_url('answer/correctly_solved') ?>" method="post">
 									<input type="hidden" name="answer_id" value="<?= $answer['id'] ?>">
 									<input type="hidden" name="question_id" value="<?= $question['id'] ?>">
 									<button type="submit" class="btn btn-success">Mark as Correct</button>

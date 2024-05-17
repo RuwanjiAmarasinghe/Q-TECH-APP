@@ -52,7 +52,7 @@ class User extends CI_Controller
 			}
 
 		} else {
-			// If the form wasn't submitted, load the registration view
+		
 			$this->load->view('register', $this->data);
 		}
 	}
@@ -83,7 +83,7 @@ class User extends CI_Controller
 
 				$this->session->set_userdata('logged_in', true);
 
-				// Redirect the user to the previous page
+			
 				if ($this->session->userdata('previous_url')) {
 					redirect($this->session->userdata('previous_url'));
 				} else {
@@ -92,12 +92,11 @@ class User extends CI_Controller
 			} else {
 
 				$this->data['error'] = $user['error'];
-				// User login failed
-				// Load the login view
+			
 				$this->load->view('login', $this->data);
 			}
 		} else {
-			// If the form wasn't submitted, load the login view
+			
 			$this->load->view('login', $this->data);
 		}
 	}
@@ -106,7 +105,7 @@ class User extends CI_Controller
 	{
 
 		if (!$this->session->userdata('user_id')) {
-			// not logged in - redirect to the home page
+		
 			redirect('home');
 		}
 	
@@ -128,16 +127,16 @@ class User extends CI_Controller
 		$this->load->model('Answer_model');
 		$this->load->model('Vote_model');
 
-		$questions = $this->Question_model->get_questions_by_user($this->user['id']);
+		$questions = $this->Question_model->obtainUserQuestions($this->user['id']);
 		$this->data['questions'] = $questions;
-		$this->data['answers'] = $this->Answer_model->get_answers_by_user($this->user['id']);
+		$this->data['answers'] = $this->Answer_model->answerProvidedByUser($this->user['id']);
 		$correct_answers = $this->Answer_model->get_correct_answers_by_user($this->user['id']);
-		$this->data['total_votes'] = $this->Vote_model->get_user_total_votes($this->user['id']);
+		$this->data['total_votes'] = $this->Vote_model->getTotalUserVotes($this->user['id']);
 
 		$this->data['num_questions'] = count($questions);
 		$this->data['num_correct_answers'] = count($correct_answers);
 
-		// Load the profile view and pass the user data to it
+		
 		$this->load->view('profile', $this->data);
 
 	}

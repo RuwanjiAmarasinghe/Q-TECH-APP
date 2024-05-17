@@ -21,9 +21,9 @@ class Question extends CI_Controller
 
 
 
-	public function display_answer_form($question_id)
+	public function viewTheAnswerForm($question_id)
 	{
-		// Checking if the user is logged in
+		
 		if (!$this->session->userdata('user_id')) {
 			
 			$this->before_page_url();
@@ -49,7 +49,7 @@ class Question extends CI_Controller
 		$answer = $this->input->post('answer');
 
 		if ($this->form_validation->run() == FALSE) {
-			$this->display_answer_form($question_id);
+			$this->viewTheAnswerForm($question_id);
 		} else {
 			$this->load->model('Answer_model');
 
@@ -70,11 +70,11 @@ class Question extends CI_Controller
 		$this->load->view('question', $this->data);
 	}
 
-	public function mark_as_solved()
+	public function solved_question()
 	{
 
 		if (!$this->session->userdata('user_id')) {
-			// If the user is not logged in, redirect to the home page
+			
 			redirect('home');
 		}
 	
@@ -82,15 +82,15 @@ class Question extends CI_Controller
 
 		$question_id = $this->input->post('question_id');
 
-		$this->Question_model->mark_as_solved($question_id);
-		log_message('debug','solved');
+		$this->Question_model->solvedQuestion($question_id);
+		log_message('debug','its marked as solved');
 	}
 
 
-	public function deleteQuestion()
+	public function delete_user_Question()
 	{
 		if (!$this->session->userdata('user_id')) {
-			// If the user is not logged in, redirect to the home page
+			
 			redirect('home');
 		}
 	
@@ -98,10 +98,9 @@ class Question extends CI_Controller
 	
 		$this->load->model('Question_model');
 
-		$this->Question_model->deleteAnswersByQuestionId($question_id);
+		$this->Question_model->deleteAnswerForId($question_id);
 	
-		// Deleting the question
-		$this->Question_model->deleteQuestion($question_id);
+		$this->Question_model->deleteUserQuestion($question_id);
 		log_message('debug', 'Question Deleted');
 	
 		redirect('profile');

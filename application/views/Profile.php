@@ -19,15 +19,6 @@
             transition: transform .5s;
         }
 
-        .question-card:hover {
-            color: grey;
-        }
-
-        .question-card:active {
-            transform: scale(0.99);
-            color: grey;
-        }
-
         .question-card .card-body {
             background-color: #343a40;
         }
@@ -53,14 +44,14 @@
         <h5 class="text-center" style="margin-bottom: 35px; font-size: 35px; font-weight: bold;">Your Profile</h5>
         <div class="row justify-content-center">
             <div class="col-md-4">
-                <!--details -->
+           
                 <div class="card bg-light mb-3">
                     <div class="card-body">
                         <h5 class="card-title">Username: <?= $username ?></h5>
-                        <p class="card-text">Email: <?= $email ?></p>
-                        <p class="card-text">Questions: <?= $num_questions ?></p>
+                        <p class="card-text">Your-Email: <?= $email ?></p>
+                        <p class="card-text">Questions-you-asked: <?= $num_questions ?></p>
                         <p class="card-text">Correct answers: <?= $num_correct_answers ?></p>
-                        <p class="card-text">Votes you Recieved: <?= $total_votes ?></p>
+                        <p class="card-text">Total-Votes: <?= $total_votes ?></p>
                     </div>
                 </div>
             </div>
@@ -105,10 +96,10 @@
 
                                             <p class="card-text"><?= $question['description'] ?></p>
                                             <p class="card-text">Answers:
-                                                <?= $this->Question_model->get_answer_count($question['id']) ?>
+                                                <?= $this->Question_model->obtainAnswerCount($question['id']) ?>
                                             </p>
                                             <?php if ($question['user_id'] == $user_id): ?>
-                                                <form action="<?php echo site_url('question/deleteQuestion'); ?>" method="post">
+                                                <form action="<?php echo site_url('question/delete_user_Question'); ?>" method="post">
                                                     <input type="hidden" name="question_id" value="<?php echo $question['id']; ?>">
                                                     <input type="hidden" name="question_id" value="<?= $question['id']; ?>">
                                                     <button type="submit" class="btn btn-danger float-right">Delete</button>

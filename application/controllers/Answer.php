@@ -13,14 +13,14 @@ class Answer extends CI_Controller
 	}
 
 	
-	public function marked_correct()
+	public function correctly_solved()
 	{
 			if (!$this->session->userdata('user_id')) {
 				redirect('login');
 			}
 			$answer_id = $this->input->post('answer_id');
 			$question_id = $this->input->post('question_id');
-			$this->Answer_model->marked_correct($answer_id, $question_id, $this->session->userdata('user_id'));
+			$this->Answer_model->markedCorrect($answer_id, $question_id, $this->session->userdata('user_id'));
 			redirect('question/view/' . $question_id);
 	}
 
@@ -34,17 +34,18 @@ class Answer extends CI_Controller
 		}
 	
 		$this->load->model('Answer_model');
+		$this->load->model('Question_model');
 
-		// Get answer id from post data
+	
 		$answer_id = $this->input->post('answer_id');
 		$question_id = $this->input->post('question_id');
 
 		$this->db->where('answer_id', $answer_id);
 		$this->db->delete('votes');
 
-		// Delete the answer
 		$this->db->where('id', $answer_id);
 		$this->db->delete('answers');
+		$this->Question_model->Unsolvedquestion($question_id);
 		log_message('debug', 'Deleted answer');
 		redirect('profile');
 

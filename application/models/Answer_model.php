@@ -14,9 +14,9 @@ class Answer_model extends CI_Model
 		return $this->db->insert('answers', $data);
 	}
 
-	public function marked_correct($answer_id, $question_id, $user_id)
+	public function markedCorrect($answer_id, $question_id, $user_id)
 	{
-		// Check if the user is the owner of the question
+
 		$this->db->where('id', $question_id);
 		$this->db->where('user_id', $user_id);
 		$query = $this->db->get('questions');
@@ -31,7 +31,7 @@ class Answer_model extends CI_Model
 
 		}
 	}
-	public function get_answers_by_user($user_id)
+	public function answerProvidedByUser($user_id)
 	{
 		$this->db->select('answers.*, questions.title as question_title');
 		$this->db->from('answers');

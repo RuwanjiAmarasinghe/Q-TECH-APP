@@ -46,7 +46,7 @@ class Question_model extends CI_Model
 	}
 
 
-	public function get_questions_by_user($user_id)
+	public function obtainUserQuestions($user_id)
 	{
 		$this->db->where('user_id', $user_id);
 		$this->db->order_by('date_asked', 'DESC');
@@ -68,14 +68,18 @@ class Question_model extends CI_Model
 		return $this->db->insert('questions', $data);
 	}
 
-	public function mark_as_solved($question_id)
+	public function solvedQuestion($question_id)
 	{
 		$this->db->where('id', $question_id);
 		return $this->db->update('questions', array('solved' => 1));
 	}
 
-
-	public function deleteAnswersByQuestionId($question_id)
+	public function Unsolvedquestion($question_id)
+	{
+		$this->db->where('id', $question_id);
+		return $this->db->update('questions', array('is_solved' => 0));
+	}
+	public function deleteAnswerForId($question_id)
 	{
 	
 		$this->db->select('id');
@@ -84,19 +88,18 @@ class Question_model extends CI_Model
 		$query = $this->db->get();
 		$answer_ids = $query->result_array();
 	
-		// Delete votes 
+	
 		foreach ($answer_ids as $answer_id) {
 			$this->db->where('answer_id', $answer_id['id']);
 			$this->db->delete('votes');
 		}
-	
-		// Delete the answers
+
 		$this->db->where('question_id', $question_id);
 		$this->db->delete('answers');
 	}
 
 
-	public function deleteQuestion($question_id)
+	public function deleteUserQuestion($question_id)
 	{
 		$this->db->where('id', $question_id);
 		return $this->db->delete('questions');
@@ -106,7 +109,7 @@ class Question_model extends CI_Model
 	}
 
 
-	public function get_answer_count($question_id)
+	public function obtainAnswerCount($question_id)
 	{
 		$this->db->where('question_id', $question_id);
 		$query = $this->db->get('answers');

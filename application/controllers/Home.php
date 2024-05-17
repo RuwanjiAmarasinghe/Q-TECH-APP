@@ -32,7 +32,7 @@ class Home extends CI_Controller
 
 	public function show_ask_form()
 	{
-		// Check if the user is logged in
+		
 		if (!$this->session->userdata('user_id')) {
 			$this->before_page_url();
 			redirect('login');
@@ -59,13 +59,12 @@ class Home extends CI_Controller
 			
 			$this->load->view('ask_question');
 		} else {
-			// Get the question title and description
+		
 			$title = $this->input->post('title');
 			$description = $this->input->post('description');
 
 			$user_id = $this->session->userdata('user_id');
 
-			// Insert the question into the database
 			$this->Question_model->ask_question($title, $description, $user_id);
 			log_message('debug', 'Question asked');			
 			redirect('home');
@@ -83,7 +82,7 @@ class Home extends CI_Controller
 		if (empty($search)) {
 			redirect('home');
 		} else {
-			//split search string into words
+		
 			$search_words = explode(' ', $search);
 			$filtered_questions = [];
 			foreach ($search_words as $word) {
@@ -95,7 +94,6 @@ class Home extends CI_Controller
 			}
 			$filtered_questions = array_unique($filtered_questions, SORT_REGULAR);
 
-			// Sort the filtered questions by date
 			usort($filtered_questions, function ($a, $b) {
 				return strtotime($b['date_asked']) - strtotime($a['date_asked']);
 			});
@@ -111,6 +109,7 @@ class Home extends CI_Controller
 	{
 		$this->session->set_userdata('previous_url', current_url());
 	}
+
 
 
 }

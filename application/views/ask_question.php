@@ -67,26 +67,26 @@
 
     <script>
         $(document).ready(function() {
-            // Define a function to handle form submission
+    
             $('#submitBtn').click(function() {
-                // Get form data
+               
                 var formData = {
                     title: $('#title').val(),
                     description: $('#description').val()
                 };
 
-                // Send an AJAX POST request to the server
+  
                 $.ajax({
                     type: 'POST',
                     url: '<?php echo site_url('home/ask_question'); ?>',
                     data: formData,
                     success: function(response) {
-                        // after successful submission
+             
                         console.log('Question saved successfully');
                         window.location.href = '<?php echo site_url('home'); ?>';
                     },
                     error: function(xhr, status, error) {
-                        // Handle errors
+                      
                         console.error(xhr.responseText);
                     }
                 });

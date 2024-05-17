@@ -9,7 +9,7 @@ class Vote extends CI_Controller
 		$this->load->library('session');
 		$this->load->helper('url');
 	}
-	public function vote_answer()
+	public function votes_given()
 	{
 
 		if (!$this->session->userdata('user_id')) {
@@ -31,7 +31,6 @@ class Vote extends CI_Controller
 			echo $vote_type;
 
 
-			// Vote the answer
 			$this->Vote_model->vote_answer($answer_id, $user_id, $vote_type);
 
 			log_message('debug', 'Voted answer');
